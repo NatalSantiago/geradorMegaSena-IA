@@ -1,0 +1,1536 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚀 Mega Sena AI - Preditor Quântico</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
+        
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            --secondary-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --dark-gradient: linear-gradient(135deg, #0c0c0c 0%, #1a1a1a 50%, #2d2d2d 100%);
+            --neon-blue: #00d4ff;
+            --neon-purple: #bf00ff;
+            --neon-green: #00ff88;
+            --neon-orange: #ff6b35;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --shadow-neon: 0 0 30px rgba(0, 212, 255, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: var(--dark-gradient);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated Background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(191, 0, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(0, 255, 136, 0.05) 0%, transparent 50%);
+            animation: backgroundShift 20s ease-in-out infinite;
+            z-index: -1;
+        }
+
+        @keyframes backgroundShift {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.1) rotate(180deg); }
+        }
+
+        /* Floating particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--neon-blue);
+            border-radius: 50%;
+            animation: float 15s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) translateX(100px);
+                opacity: 0;
+            }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Glassmorphism Header */
+        .header {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 25px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-neon);
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, var(--neon-blue), transparent);
+            animation: rotate 10s linear infinite;
+            z-index: -1;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            inset: 2px;
+            background: var(--dark-gradient);
+            border-radius: 23px;
+            z-index: -1;
+        }
+
+        @keyframes rotate {
+            100% { transform: rotate(360deg); }
+        }
+
+        .header h1 {
+            font-family: 'Orbitron', monospace;
+            font-size: 3.5em;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple), var(--neon-green));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+            text-shadow: 0 0 30px rgba(0, 212, 255, 0.5);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { filter: brightness(1); }
+            to { filter: brightness(1.2); }
+        }
+
+        .header p {
+            font-size: 1.4em;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        /* File Upload Section */
+        .file-section {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .file-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.1), transparent);
+            animation: scan 3s infinite;
+        }
+
+        @keyframes scan {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .file-upload-area {
+            border: 2px dashed var(--neon-blue);
+            border-radius: 15px;
+            padding: 40px;
+            text-align: center;
+            transition: all 0.3s ease;
+            background: rgba(0, 212, 255, 0.05);
+            position: relative;
+        }
+
+        .file-upload-area:hover {
+            border-color: var(--neon-purple);
+            background: rgba(191, 0, 255, 0.05);
+            transform: translateY(-2px);
+        }
+
+        .file-upload-area.dragover {
+            border-color: var(--neon-green);
+            background: rgba(0, 255, 136, 0.1);
+            box-shadow: 0 0 30px rgba(0, 255, 136, 0.3);
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .file-label {
+            display: inline-block;
+            padding: 15px 30px;
+            background: var(--secondary-gradient);
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .file-label:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(79, 172, 254, 0.4);
+        }
+
+        .file-status {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+
+        .file-status.success {
+            background: rgba(0, 255, 136, 0.2);
+            color: var(--neon-green);
+            border: 1px solid var(--neon-green);
+        }
+
+        .file-status.error {
+            background: rgba(255, 107, 53, 0.2);
+            color: var(--neon-orange);
+            border: 1px solid var(--neon-orange);
+        }
+
+        /* Controls Section */
+        .controls-section {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 35px;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .controls-section h2 {
+            font-family: 'Orbitron', monospace;
+            color: var(--neon-blue);
+            font-size: 1.8em;
+            margin-bottom: 30px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+
+        .control-group {
+            position: relative;
+        }
+
+        .control-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.1em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .control-group select,
+        .control-group input {
+            width: 100%;
+            padding: 15px 20px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: white;
+            font-size: 16px;
+            font-family: 'Rajdhani', sans-serif;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .control-group select:focus,
+        .control-group input:focus {
+            outline: none;
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        .control-group select#mlStrategy {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(0, 212, 255, 0.1));
+            border-color: var(--neon-blue);
+        }
+
+        .control-group select option {
+            background: #1a1a1a;
+            color: white;
+            padding: 10px;
+        }
+
+        /* Export Button */
+        .export-btn {
+            position: relative;
+            background: linear-gradient(135deg, var(--neon-green), #00aa66);
+            color: white;
+            padding: 15px 35px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1em;
+            font-weight: 700;
+            font-family: 'Orbitron', monospace;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.3);
+            margin-left: 15px;
+        }
+
+        .export-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .export-btn:hover::before {
+            left: 100%;
+        }
+
+        .export-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 255, 136, 0.5);
+        }
+
+        .export-btn:active {
+            transform: translateY(-1px);
+        }
+
+        /* Results Section */
+        .results-section {
+            margin-top: 30px;
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-top: 25px;
+        }
+
+        .game-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 30px;
+            position: relative;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .game-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--primary-gradient);
+        }
+
+        .game-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 212, 255, 0.2);
+            border-color: var(--neon-blue);
+        }
+
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .game-title {
+            font-family: 'Orbitron', monospace;
+            font-weight: 700;
+            color: var(--neon-blue);
+            font-size: 1.3em;
+            text-transform: uppercase;
+        }
+
+        .confidence-score {
+            background: var(--secondary-gradient);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(79, 172, 254, 0.3);
+        }
+
+        .numbers-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 20px;
+            justify-content: center;
+        }
+
+        .number {
+            width: 50px;
+            height: 50px;
+            background: var(--primary-gradient);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2em;
+            font-family: 'Orbitron', monospace;
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .number::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: numberRotate 3s linear infinite;
+        }
+
+        @keyframes numberRotate {
+            100% { transform: rotate(360deg); }
+        }
+
+        .number:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.6);
+        }
+
+        .game-stats {
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 1em;
+        }
+
+        .stat-label {
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 400;
+        }
+
+        .stat-value {
+            font-weight: 600;
+            color: var(--neon-green);
+            font-family: 'Orbitron', monospace;
+        }
+
+        /* Messages */
+        .message {
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1.1em;
+            backdrop-filter: blur(10px);
+        }
+
+        .success-message {
+            background: rgba(0, 255, 136, 0.2);
+            color: var(--neon-green);
+            border: 1px solid var(--neon-green);
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
+        }
+
+        .error-message {
+            background: rgba(255, 107, 53, 0.2);
+            color: var(--neon-orange);
+            border: 1px solid var(--neon-orange);
+            box-shadow: 0 0 20px rgba(255, 107, 53, 0.2);
+        }
+
+        .loading {
+            text-align: center;
+            padding: 50px;
+            color: var(--neon-blue);
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+
+        .loading::after {
+            content: '';
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            border: 3px solid rgba(0, 212, 255, 0.3);
+            border-top: 3px solid var(--neon-blue);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-left: 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Developer Info */
+        .developer-info {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            color: rgba(255, 255, 255, 0.9);
+            padding: 35px;
+            text-align: center;
+            border-radius: 20px;
+            margin-top: 40px;
+            position: relative;
+        }
+
+        .developer-info h3 {
+            font-family: 'Orbitron', monospace;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            color: var(--neon-purple);
+            text-transform: uppercase;
+        }
+
+        .developer-info p {
+            margin-bottom: 10px;
+            font-size: 1.1em;
+            font-weight: 400;
+        }
+
+        /* Data Stats */
+        .data-stats {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stat-number {
+            font-family: 'Orbitron', monospace;
+            font-size: 2em;
+            font-weight: 700;
+            color: var(--neon-blue);
+            display: block;
+        }
+
+        .stat-text {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5em;
+            }
+            
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+            
+            .games-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .numbers-container {
+                gap: 8px;
+            }
+            
+            .number {
+                width: 45px;
+                height: 45px;
+                font-size: 1.1em;
+            }
+
+            .results-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .export-btn {
+                margin-left: 0;
+                margin-top: 10px;
+            }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-gradient);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--secondary-gradient);
+        }
+
+        /* Footer Styles (copiado do estilo do LotoFácil, adaptado para variáveis locais) */
+        :root {
+            --gradient-card: var(--glass-bg);
+            --border-glow: var(--glass-border);
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --text-accent: var(--neon-blue);
+            --accent-neon: var(--neon-green);
+            --primary-neon: var(--neon-blue);
+        }
+
+        .footer {
+            background: var(--gradient-card);
+            border-radius: 20px;
+            padding: 30px;
+            border: 2px solid var(--border-glow);
+            box-shadow: var(--shadow-neon);
+            backdrop-filter: blur(15px);
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .footer-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.3rem;
+            color: var(--primary-neon);
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .footer-content {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+
+        .footer-content strong {
+            color: var(--text-accent);
+            font-weight: 600;
+        }
+
+        .footer-link {
+            color: var(--accent-neon);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--primary-neon);
+            text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+        }
+
+        .footer-icon {
+            height: 20px;
+            width: 20px;
+            vertical-align: middle;
+            margin-right: 8px;
+            border-radius: 4px;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+<body>
+    <!-- Animated particles -->
+    <div class="particles" id="particles"></div>
+
+    <div class="container">
+        <div class="header">
+            <h1>🚀 MEGA SENA AI</h1>
+            <p>Sistema Quântico de Predição com Machine Learning Avançado</p>
+        </div>
+
+        <!-- File Upload Section -->
+        <div class="file-section">
+            <h2 style="color: var(--neon-blue); font-family: 'Orbitron', monospace; text-align: center; margin-bottom: 20px; text-transform: uppercase;">
+                📊 Base de Dados Histórica
+            </h2>
+            <div class="file-upload-area" id="fileUploadArea">
+                <div style="font-size: 3em; margin-bottom: 15px;">📁</div>
+                <label for="excelFile" class="file-label">
+                    Selecionar Arquivo Excel (.xlsx)
+                </label>
+                <input type="file" id="excelFile" class="file-input" accept=".xlsx,.xls">
+                <p style="margin-top: 15px; color: rgba(255, 255, 255, 0.7);">
+                    Arraste e solte o arquivo aqui ou clique para selecionar
+                </p>
+            </div>
+            <div id="fileStatus" class="file-status" style="display: none;"></div>
+            <div id="dataStats" class="data-stats" style="display: none;"></div>
+            <!-- Botão Gerar Jogos: aparece após selecionar a base de dados -->
+            <div id="generateContainer" style="display: none; text-align: center; margin-top: 15px;">
+                <button id="generateBtn" class="export-btn">🎲 Gerar Jogos</button>
+            </div>
+        </div>
+
+        <!-- Controls Section -->
+        <div class="controls-section">
+            <h2>⚙️ Configurações do Algoritmo Quântico</h2>
+            
+            <div class="grid-2">
+                <div class="control-group">
+                    <label for="mlStrategy">🧠 Estratégia de Machine Learning:</label>
+                    <select id="mlStrategy">
+                        <option value="balanced">ML Equilibrado - Distribuição Inteligente</option>
+                        <option value="frequency">ML Frequência - Análise Histórica</option>
+                        <option value="pattern">ML Padrões - Sequências Avançadas</option>
+                        <option value="neural">ML Neural - Rede Profunda</option>
+                        <option value="ensemble">ML Ensemble - Múltiplos Algoritmos</option>
+                        <option value="quantum">ML Quântico - Superposição de Estados</option>
+                    </select>
+                </div>
+
+                <div class="control-group">
+                    <label for="gameCount">🎮 Quantidade de Jogos (1-100):</label>
+                    <input type="number" id="gameCount" min="1" max="100" value="5" style="text-align: center;">
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div class="control-group">
+                    <label for="confidenceLevel">📊 Nível de Confiança:</label>
+                    <select id="confidenceLevel">
+                        <option value="conservative">Conservador (70-80%)</option>
+                        <option value="moderate" selected>Moderado (80-90%)</option>
+                        <option value="aggressive">Agressivo (90-95%)</option>
+                        <option value="extreme">Extremo (95-99%)</option>
+                        <option value="quantum">Quântico (99.9%)</option>
+                    </select>
+                </div>
+
+                <div class="control-group">
+                    <label for="excludeNumbers">🚫 Números a Excluir (opcional):</label>
+                    <input type="text" id="excludeNumbers" placeholder="Ex: 1,13,25 (separados por vírgula)">
+                </div>
+            </div>
+        </div>
+
+        <div id="results" class="results-section"></div>
+
+        <!-- Rodapé no mesmo estilo do LotoFácil -->
+        <div class="footer">
+            <div class="footer-content">
+                <strong>SantiagoTECH.</strong> Soluções em Tecnologia<br>
+                <a href="https://wa.me/5563992259154" class="footer-link" target="_blank" rel="noopener noreferrer">
+                    <img src="https://i.ibb.co/RGJC9fPg/logo-whatsapp-icon-181638.png" alt="WhatsApp" class="footer-icon" border="0">WhatsApp: (63) 9 9225-9154
+                </a><br>
+                <a href="mailto:natal.santiago.tech@gmail.com" class="footer-link">
+                   <img src="https://i.ibb.co/sGDKhcp/GMail-icon-icons-com-76886.png" alt="Email" class="footer-icon" border="0"> Email: natal.santiago.tech@gmail.com
+                </a>
+
+            </div>
+        </div>
+    </div>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        // Variáveis globais
+        let historicalData = [];
+        let excelData = [];
+        let frequencyAnalysis = {};
+        let patternAnalysis = {};
+        let currentGames = [];
+        let currentStrategy = '';
+        let generationDateTime = '';
+        let generateBtnInitialized = false;
+
+        // Dados históricos padrão (fallback)
+        const defaultHistoricalData = [
+            [4, 5, 30, 33, 41, 52], [7, 12, 18, 25, 36, 58], [2, 11, 22, 35, 44, 59],
+            [1, 8, 15, 28, 42, 56], [6, 13, 24, 31, 47, 60], [3, 9, 19, 26, 38, 53],
+            [10, 16, 23, 34, 45, 57], [14, 20, 27, 39, 46, 54], [17, 21, 29, 40, 48, 55],
+            [5, 11, 32, 37, 43, 51], [8, 18, 25, 33, 41, 58], [2, 12, 19, 28, 44, 59],
+            [1, 7, 22, 35, 42, 56], [6, 15, 24, 31, 47, 60], [3, 13, 26, 38, 45, 53],
+            [4, 16, 23, 34, 46, 57], [9, 20, 27, 39, 48, 54], [10, 21, 29, 40, 49, 55],
+            [5, 14, 30, 37, 43, 52], [11, 17, 25, 32, 41, 51]
+        ];
+
+        // Inicialização
+        window.addEventListener('load', () => {
+            createParticles();
+            setupFileUpload();
+            // Removido: setupAutoGeneration();  // Não gerar automaticamente ao mudar controles
+            historicalData = [...defaultHistoricalData];
+            analyzeHistoricalData();
+        });
+
+        // Criar partículas animadas
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Configurar geração automática
+        function setupAutoGeneration() {
+            const mlStrategy = document.getElementById('mlStrategy');
+            const gameCount = document.getElementById('gameCount');
+            const confidenceLevel = document.getElementById('confidenceLevel');
+            const excludeNumbers = document.getElementById('excludeNumbers');
+
+            // Removido: listeners que geravam automaticamente
+            // mlStrategy.addEventListener('change', generateGames);
+            // gameCount.addEventListener('input', debounce(generateGames, 500));
+            // confidenceLevel.addEventListener('change', generateGames);
+            // excludeNumbers.addEventListener('input', debounce(generateGames, 1000));
+        }
+
+        // Função debounce para evitar muitas gerações seguidas
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        // Configurar upload de arquivo
+        function setupFileUpload() {
+            const fileInput = document.getElementById('excelFile');
+            const uploadArea = document.getElementById('fileUploadArea');
+            const fileStatus = document.getElementById('fileStatus');
+
+            fileInput.addEventListener('change', handleFileSelect);
+            
+            // Drag and drop
+            uploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadArea.classList.add('dragover');
+            });
+
+            uploadArea.addEventListener('dragleave', () => {
+                uploadArea.classList.remove('dragover');
+            });
+
+            uploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadArea.classList.remove('dragover');
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    fileInput.files = files;
+                    handleFileSelect({ target: { files } });
+                }
+            });
+        }
+
+        // Processar arquivo Excel
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            const fileStatus = document.getElementById('fileStatus');
+            
+            if (!file) return;
+
+            if (!file.name.match(/\.(xlsx|xls)$/)) {
+                showFileStatus('Erro: Por favor, selecione um arquivo Excel (.xlsx ou .xls)', 'error');
+                return;
+            }
+
+            showFileStatus('📊 Processando arquivo Excel...', 'success');
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = new Uint8Array(e.target.result);
+                    const workbook = XLSX.read(data, { type: 'array' });
+                    const firstSheetName = workbook.SheetNames[0];
+                    const worksheet = workbook.Sheets[firstSheetName];
+                    const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+                    
+                    processExcelData(jsonData);
+                    showFileStatus(`✅ Arquivo carregado com sucesso! ${excelData.length} jogos processados.`, 'success');
+                    showDataStats();
+
+                    // Mostrar botão "Gerar Jogos" somente após escolher a base de dados
+                    const genContainer = document.getElementById('generateContainer');
+                    const genBtn = document.getElementById('generateBtn');
+                    genContainer.style.display = 'block';
+                    if (!generateBtnInitialized) {
+                        genBtn.addEventListener('click', () => {
+                            generateGames();
+                        });
+                        generateBtnInitialized = true;
+                    }
+                    
+                    // Removido: geração automática após carregar dados
+                    // setTimeout(generateGames, 1000);
+                    
+                } catch (error) {
+                    console.error('Erro ao processar Excel:', error);
+                    showFileStatus('❌ Erro ao processar o arquivo Excel. Verifique o formato.', 'error');
+                }
+            };
+            reader.readAsArrayBuffer(file);
+        }
+
+        // Processar dados do Excel
+        function processExcelData(jsonData) {
+            excelData = [];
+            historicalData = [];
+            
+            jsonData.forEach((row, index) => {
+                if (index === 0) return; // Skip header
+                
+                // Assumindo que as colunas são: Concurso, Data, N1, N2, N3, N4, N5, N6
+                if (row.length >= 8) {
+                    const numbers = [
+                        parseInt(row[2]), parseInt(row[3]), parseInt(row[4]),
+                        parseInt(row[5]), parseInt(row[6]), parseInt(row[7])
+                    ].filter(n => !isNaN(n) && n >= 1 && n <= 60);
+                    
+                    if (numbers.length === 6) {
+                        excelData.push({
+                            concurso: row[0],
+                            data: row[1],
+                            numbers: numbers.sort((a, b) => a - b)
+                        });
+                        historicalData.push(numbers);
+                    }
+                }
+            });
+
+            // Se não conseguiu processar dados do Excel, usa dados padrão
+            if (historicalData.length === 0) {
+                historicalData = [...defaultHistoricalData];
+            }
+
+            analyzeHistoricalData();
+        }
+
+        // Analisar dados históricos
+        function analyzeHistoricalData() {
+            frequencyAnalysis = {};
+            patternAnalysis = {
+                pairs: {},
+                sequences: {},
+                gaps: {}
+            };
+
+            // Análise de frequência
+            for (let i = 1; i <= 60; i++) {
+                frequencyAnalysis[i] = 0;
+            }
+
+            historicalData.forEach(game => {
+                game.forEach(number => {
+                    frequencyAnalysis[number]++;
+                });
+
+                // Análise de pares
+                for (let i = 0; i < game.length; i++) {
+                    for (let j = i + 1; j < game.length; j++) {
+                        const pair = `${game[i]}-${game[j]}`;
+                        patternAnalysis.pairs[pair] = (patternAnalysis.pairs[pair] || 0) + 1;
+                    }
+                }
+            });
+        }
+
+        // Mostrar status do arquivo
+        function showFileStatus(message, type) {
+            const fileStatus = document.getElementById('fileStatus');
+            fileStatus.textContent = message;
+            fileStatus.className = `file-status ${type}`;
+            fileStatus.style.display = 'block';
+        }
+
+        // Mostrar estatísticas dos dados
+        function showDataStats() {
+            const dataStats = document.getElementById('dataStats');
+            const totalGames = historicalData.length;
+            const mostFrequent = Object.entries(frequencyAnalysis)
+                .sort(([,a], [,b]) => b - a)
+                .slice(0, 6)
+                .map(([num]) => num);
+            
+            const leastFrequent = Object.entries(frequencyAnalysis)
+                .sort(([,a], [,b]) => a - b)
+                .slice(0, 6)
+                .map(([num]) => num);
+
+            dataStats.innerHTML = `
+                <div class="stat-item">
+                    <span class="stat-number">${totalGames}</span>
+                    <span class="stat-text">Total de Jogos</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">${mostFrequent.slice(0, 3).join(', ')}</span>
+                    <span class="stat-text">Mais Frequentes</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">${leastFrequent.slice(0, 3).join(', ')}</span>
+                    <span class="stat-text">Menos Frequentes</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">${Object.keys(patternAnalysis.pairs).length}</span>
+                    <span class="stat-text">Padrões Identificados</span>
+                </div>
+            `;
+            dataStats.style.display = 'grid';
+        }
+
+        // Gerar números únicos com estratégias avançadas
+        function generateUniqueNumbers(count = 6, exclude = [], strategy = 'balanced', maxAttempts = 2000) {
+            const numbers = new Set();
+            let attempts = 0;
+            
+            while (numbers.size < count && attempts < maxAttempts) {
+                let num;
+                
+                switch (strategy) {
+                    case 'balanced':
+                        num = generateBalancedNumber(numbers, attempts);
+                        break;
+                        
+                    case 'frequency':
+                        num = generateFrequencyBasedNumber();
+                        break;
+                        
+                    case 'pattern':
+                        num = generatePatternBasedNumber(numbers);
+                        break;
+                        
+                    case 'neural':
+                        num = generateNeuralNumber(numbers);
+                        break;
+                        
+                    case 'ensemble':
+                        const methods = ['balanced', 'frequency', 'pattern', 'neural'];
+                        const method = methods[Math.floor(Math.random() * methods.length)];
+                        return generateUniqueNumbers(count, exclude, method, maxAttempts);
+                        
+                    case 'quantum':
+                        num = generateQuantumNumber(numbers);
+                        break;
+                        
+                    default:
+                        num = Math.floor(Math.random() * 60) + 1;
+                }
+                
+                if (!exclude.includes(num) && num >= 1 && num <= 60) {
+                    numbers.add(num);
+                }
+                
+                attempts++;
+            }
+            
+            // Completar com números aleatórios se necessário
+            while (numbers.size < count) {
+                let num = Math.floor(Math.random() * 60) + 1;
+                if (!exclude.includes(num) && !numbers.has(num)) {
+                    numbers.add(num);
+                }
+            }
+            
+            return Array.from(numbers).sort((a, b) => a - b);
+        }
+
+        // Estratégias de geração de números
+        function generateBalancedNumber(existingNumbers, attempts) {
+            if (attempts > 200) {
+                const zones = [[1, 15], [16, 30], [31, 45], [46, 60]];
+                const zone = zones[attempts % zones.length];
+                return Math.floor(Math.random() * (zone[1] - zone[0] + 1)) + zone[0];
+            }
+            return Math.floor(Math.random() * 60) + 1;
+        }
+
+        function generateFrequencyBasedNumber() {
+            const sortedByFreq = Object.entries(frequencyAnalysis)
+                .sort(([,a], [,b]) => b - a);
+            
+            if (Math.random() < 0.7) {
+                // 70% chance de usar números mais frequentes
+                const topNumbers = sortedByFreq.slice(0, 20);
+                const selected = topNumbers[Math.floor(Math.random() * topNumbers.length)];
+                return parseInt(selected[0]);
+            } else {
+                // 30% chance de usar números menos frequentes
+                const bottomNumbers = sortedByFreq.slice(-20);
+                const selected = bottomNumbers[Math.floor(Math.random() * bottomNumbers.length)];
+                return parseInt(selected[0]);
+            }
+        }
+
+        function generatePatternBasedNumber(existingNumbers) {
+            if (existingNumbers.size === 0) {
+                return Math.floor(Math.random() * 20) + 1;
+            }
+            
+            const lastNum = Math.max(...Array.from(existingNumbers));
+            const gaps = [3, 5, 7, 9, 11, 13, 15];
+            const gap = gaps[Math.floor(Math.random() * gaps.length)];
+            let num = lastNum + gap;
+            
+            if (num > 60) {
+                num = Math.floor(Math.random() * 60) + 1;
+            }
+            
+            return num;
+        }
+
+        function generateNeuralNumber(existingNumbers) {
+            // Simulação de rede neural com pesos baseados no histórico
+            const weights = historicalData.flat();
+            const recentGames = historicalData.slice(-10).flat();
+            
+            // Combinar dados históricos com jogos recentes
+            const combinedWeights = [...weights, ...recentGames, ...recentGames];
+            
+            if (Math.random() < 0.6) {
+                return combinedWeights[Math.floor(Math.random() * combinedWeights.length)];
+            } else {
+                return Math.floor(Math.random() * 60) + 1;
+            }
+        }
+
+        function generateQuantumNumber(existingNumbers) {
+            // Simulação de algoritmo quântico com superposição
+            const quantumStates = [];
+            
+            // Criar superposição de estados baseada em múltiplos fatores
+            for (let i = 1; i <= 60; i++) {
+                let probability = 1;
+                
+                // Fator frequência
+                probability *= (frequencyAnalysis[i] || 1) / Math.max(...Object.values(frequencyAnalysis));
+                
+                // Fator temporal (números recentes têm peso diferente)
+                const recentAppearances = historicalData.slice(-5).flat().filter(n => n === i).length;
+                probability *= (1 + recentAppearances * 0.1);
+                
+                // Fator de distribuição
+                const zone = Math.floor((i - 1) / 15);
+                const zoneCount = Array.from(existingNumbers).filter(n => Math.floor((n - 1) / 15) === zone).length;
+                if (zoneCount < 2) probability *= 1.2;
+                
+                quantumStates.push({ number: i, probability });
+            }
+            
+            // Colapsar superposição (seleção baseada em probabilidade)
+            const totalProb = quantumStates.reduce((sum, state) => sum + state.probability, 0);
+            let random = Math.random() * totalProb;
+            
+            for (const state of quantumStates) {
+                random -= state.probability;
+                if (random <= 0) {
+                    return state.number;
+                }
+            }
+            
+            return Math.floor(Math.random() * 60) + 1;
+        }
+
+        // Calcular estatísticas do jogo
+        function calculateGameStats(numbers) {
+            const sum = numbers.reduce((a, b) => a + b, 0);
+            const evenCount = numbers.filter(n => n % 2 === 0).length;
+            const oddCount = 6 - evenCount;
+            
+            const dozens = {
+                '01-15': numbers.filter(n => n >= 1 && n <= 15).length,
+                '16-30': numbers.filter(n => n >= 16 && n <= 30).length,
+                '31-45': numbers.filter(n => n >= 31 && n <= 45).length,
+                '46-60': numbers.filter(n => n >= 46 && n <= 60).length
+            };
+            
+            // Análise de padrões avançada
+            const gaps = [];
+            for (let i = 1; i < numbers.length; i++) {
+                gaps.push(numbers[i] - numbers[i-1]);
+            }
+            
+            const avgGap = gaps.reduce((a, b) => a + b, 0) / gaps.length;
+            
+            return {
+                sum,
+                evenCount,
+                oddCount,
+                dozens,
+                gaps,
+                avgGap: Math.round(avgGap * 10) / 10
+            };
+        }
+
+        // Calcular score de confiança
+        function getConfidenceScore(strategy, confidenceLevel) {
+            const baseScores = {
+                'balanced': 85,
+                'frequency': 82,
+                'pattern': 88,
+                'neural': 91,
+                'ensemble': 94,
+                'quantum': 97
+            };
+            
+            const modifiers = {
+                'conservative': -8,
+                'moderate': -2,
+                'aggressive': +3,
+                'extreme': +6,
+                'quantum': +8
+            };
+            
+            const base = baseScores[strategy] || 80;
+            const modifier = modifiers[confidenceLevel] || 0;
+            const randomVariation = Math.floor(Math.random() * 6) - 3;
+            const dataBonus = Math.min(5, Math.floor(historicalData.length / 100));
+            
+            return Math.min(99.9, Math.max(70, base + modifier + randomVariation + dataBonus));
+        }
+
+        // Gerar jogos principais
+        function generateGames() {
+            const strategy = document.getElementById('mlStrategy').value;
+            const gameCountInput = document.getElementById('gameCount');
+            let gameCount = parseInt(gameCountInput.value);
+            const confidenceLevel = document.getElementById('confidenceLevel').value;
+            const excludeInput = document.getElementById('excludeNumbers').value;
+            
+            // Validar quantidade de jogos
+            if (isNaN(gameCount) || gameCount < 1) {
+                gameCount = 1;
+                gameCountInput.value = 1;
+            } else if (gameCount > 100) {
+                gameCount = 100;
+                gameCountInput.value = 100;
+            }
+            
+            const excludeNumbers = excludeInput
+                .split(',')
+                .map(n => parseInt(n.trim()))
+                .filter(n => !isNaN(n) && n >= 1 && n <= 60);
+            
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '<div class="loading">🤖 Processando com IA Quântica...</div>';
+            
+            // Armazenar dados da geração atual
+            currentStrategy = getStrategyName(strategy);
+            generationDateTime = new Date().toLocaleString('pt-BR');
+            
+            setTimeout(() => {
+                try {
+                    const games = [];
+                    const generatedSets = new Set();
+                    let attempts = 0;
+                    const maxAttempts = gameCount * 100;
+                    
+                    while (games.length < gameCount && attempts < maxAttempts) {
+                        const numbers = generateUniqueNumbers(6, excludeNumbers, strategy);
+                        const gameKey = numbers.join('-');
+                        
+                        if (!generatedSets.has(gameKey)) {
+                            generatedSets.add(gameKey);
+                            
+                            const stats = calculateGameStats(numbers);
+                            const confidence = getConfidenceScore(strategy, confidenceLevel);
+                            
+                            games.push({
+                                numbers,
+                                stats,
+                                confidence,
+                                strategy: getStrategyName(strategy)
+                            });
+                        }
+                        attempts++;
+                    }
+                    
+                    if (games.length < gameCount) {
+                        throw new Error(`Gerados ${games.length} de ${gameCount} jogos únicos solicitados.`);
+                    }
+                    
+                    currentGames = games;
+                    displayResults(games);
+                    
+                } catch (error) {
+                    resultsDiv.innerHTML = `<div class="error-message">❌ ${error.message}</div>`;
+                }
+            }, 1500);
+        }
+
+        // Obter nome da estratégia
+        function getStrategyName(strategy) {
+            const names = {
+                'balanced': 'ML Equilibrado',
+                'frequency': 'ML Frequência',
+                'pattern': 'ML Padrões',
+                'neural': 'ML Neural',
+                'ensemble': 'ML Ensemble',
+                'quantum': 'ML Quântico'
+            };
+            return names[strategy] || 'ML Padrão';
+        }
+
+        // Exportar para TXT
+        function exportToTXT() {
+            if (currentGames.length === 0) {
+                alert('Nenhum jogo foi gerado ainda!');
+                return;
+            }
+
+            let txtContent = '';
+            txtContent += '=' .repeat(80) + '\n';
+            txtContent += '🚀 MEGA SENA AI - PREDITOR QUÂNTICO\n';
+            txtContent += '=' .repeat(80) + '\n\n';
+            
+            txtContent += `📊 INFORMAÇÕES DA GERAÇÃO:\n`;
+            txtContent += `Data/Hora: ${generationDateTime}\n`;
+            txtContent += `Estratégia: ${currentStrategy}\n`;
+            txtContent += `Total de Jogos: ${currentGames.length}\n`;
+            txtContent += `Base de Dados: ${historicalData.length} jogos históricos\n\n`;
+            
+            txtContent += '=' .repeat(80) + '\n';
+            txtContent += 'JOGOS GERADOS\n';
+            txtContent += '=' .repeat(80) + '\n\n';
+
+            currentGames.forEach((game, index) => {
+                txtContent += `🎯 JOGO ${index + 1} - ${game.strategy}\n`;
+                txtContent += `-`.repeat(50) + '\n';
+                txtContent += `Números: ${game.numbers.map(n => n.toString().padStart(2, '0')).join(' - ')}\n`;
+                txtContent += `Confiança: ${game.confidence}%\n`;
+                txtContent += `Soma Total: ${game.stats.sum}\n`;
+                txtContent += `Pares/Ímpares: ${game.stats.evenCount}/${game.stats.oddCount}\n`;
+                txtContent += `Gap Médio: ${game.stats.avgGap}\n`;
+                
+                const dozensText = Object.entries(game.stats.dozens)
+                    .map(([range, count]) => `${range}:${count}`)
+                    .join(' | ');
+                txtContent += `Distribuição: ${dozensText}\n`;
+                
+                if (game.stats.gaps) {
+                    txtContent += `Gaps entre números: ${game.stats.gaps.join(', ')}\n`;
+                }
+                
+                txtContent += '\n';
+            });
+
+            txtContent += '=' .repeat(80) + '\n';
+            txtContent += 'ESTATÍSTICAS GERAIS\n';
+            txtContent += '=' .repeat(80) + '\n\n';
+            
+            // Calcular estatísticas gerais
+            const allNumbers = currentGames.flatMap(game => game.numbers);
+            const numberFreq = {};
+            allNumbers.forEach(num => {
+                numberFreq[num] = (numberFreq[num] || 0) + 1;
+            });
+            
+            const sortedFreq = Object.entries(numberFreq)
+                .sort(([,a], [,b]) => b - a)
+                .slice(0, 10);
+            
+            txtContent += `Números mais sorteados nesta geração:\n`;
+            sortedFreq.forEach(([num, freq], index) => {
+                txtContent += `${index + 1}º - Número ${num}: ${freq} vez(es)\n`;
+            });
+            
+            const avgSum = currentGames.reduce((sum, game) => sum + game.stats.sum, 0) / currentGames.length;
+            const avgConfidence = currentGames.reduce((sum, game) => sum + game.confidence, 0) / currentGames.length;
+            
+            txtContent += `\nSoma média dos jogos: ${Math.round(avgSum)}\n`;
+            txtContent += `Confiança média: ${Math.round(avgConfidence * 10) / 10}%\n`;
+            
+            txtContent += '\n' + '=' .repeat(80) + '\n';
+            txtContent += '👨‍💻 DESENVOLVEDOR: Natal Santiago\n';
+            txtContent += '📧 EMAIL: natalsantiago@gmail.com\n';
+            txtContent += '🔬 ESPECIALIDADE: Machine Learning & Algoritmos Preditivos Quânticos\n';
+            txtContent += '📱 VERSÃO: 3.0.0 - Quantum AI Advanced\n';
+            txtContent += '=' .repeat(80) + '\n';
+
+            // Criar e baixar arquivo
+            const blob = new Blob([txtContent], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `MegaSena_AI_${new Date().toISOString().slice(0, 19).replace(/:/g, '-')}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // Exibir resultados
+        function displayResults(games) {
+            const resultsDiv = document.getElementById('results');
+            
+            let html = `
+                <div class="results-header">
+                    <div class="success-message" style="flex: 1; margin: 0;">
+                        ✅ ${games.length} jogos gerados com sucesso usando IA Quântica!
+                        ${historicalData.length > 20 ? `📊 Baseado em ${historicalData.length} jogos históricos` : ''}
+                    </div>
+                    <button class="export-btn" onclick="exportToTXT()">
+                        📄 Exportar TXT
+                    </button>
+                </div>
+                <div class="games-grid">
+            `;
+            
+            games.forEach((game, index) => {
+                const dozensText = Object.entries(game.stats.dozens)
+                    .map(([range, count]) => `${range}: ${count}`)
+                    .join(' | ');
+                
+                html += `
+                    <div class="game-card">
+                        <div class="game-header">
+                            <div class="game-title">Jogo ${index + 1} - ${game.strategy}</div>
+                            <div class="confidence-score">${game.confidence}% Confiança</div>
+                        </div>
+                        <div class="numbers-container">
+                            ${game.numbers.map(num => `<div class="number">${num.toString().padStart(2, '0')}</div>`).join('')}
+                        </div>
+                        <div class="game-stats">
+                            <div class="stat-row">
+                                <span class="stat-label">Soma Total:</span>
+                                <span class="stat-value">${game.stats.sum}</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Pares/Ímpares:</span>
+                                <span class="stat-value">${game.stats.evenCount}/${game.stats.oddCount}</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Gap Médio:</span>
+                                <span class="stat-value">${game.stats.avgGap}</span>
+                            </div>
+                            <div class="stat-row">
+                                <span class="stat-label">Distribuição:</span>
+                                <span class="stat-value">${dozensText}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            html += '</div>';
+            resultsDiv.innerHTML = html;
+        }
+    </script>
+</body>
+</html>
